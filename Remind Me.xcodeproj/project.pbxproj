@@ -41,6 +41,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D03AB992A38A7B700A87A55 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1D59547E2A30AB9900D13E72 /* CheckListItem.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		1D59545E2A307C0900D13E72 = {
 			isa = PBXGroup;
 			children = (
@@ -62,7 +70,7 @@
 			children = (
 				1D59546A2A307C0900D13E72 /* AppDelegate.swift */,
 				1D59546C2A307C0900D13E72 /* SceneDelegate.swift */,
-				1D59547E2A30AB9900D13E72 /* CheckListItem.swift */,
+				1D03AB992A38A7B700A87A55 /* Models */,
 				1D59546E2A307C0900D13E72 /* MainViewController.swift */,
 				1D42B7542A3732990062EEAA /* AddItemViewController.swift */,
 				1D5954702A307C0900D13E72 /* Main.storyboard */,

@@ -8,7 +8,6 @@
 import Foundation
 
 struct CheckListItem {
-  
   let text: String
   let isCheck: Bool
 }
