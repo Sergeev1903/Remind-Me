@@ -8,18 +8,36 @@
 import UIKit
 
 protocol AddItemViewControllerDelegate: AnyObject{
-  func addItemViewController(_ controller: AddItemViewController,
-                             didFinishAdding item: CheckListItem)
-  func addItemViewControllerDidCancel(_ controller: AddItemViewController)
+  func addItemViewController(
+    _ controller: NoteDetailViewController,
+    didFinishAdding item: NoteListItem)
+  func addItemViewControllerDidCancel(
+    _ controller: NoteDetailViewController)
 }
 
-class AddItemViewController: UITableViewController {
+protocol EditItemViewControllerDelegate: AnyObject{
+  func editItemViewController(
+    _ controller: NoteDetailViewController,
+    didFinishEditing item: NoteListItem,
+    with indexPath: IndexPath)
+  func editItemViewControllerDidCancel(
+    _ controller: NoteDetailViewController)
+}
+
+
+class NoteDetailViewController: UITableViewController {
   
   // MARK: - @IBOutlets
   @IBOutlet weak var textField: UITextField!
   @IBOutlet weak var doneBarButton: UIBarButtonItem!
   
-  weak var delegate: AddItemViewControllerDelegate?
+  // MARK: - Delegates
+  weak var addItemDelegate: AddItemViewControllerDelegate?
+  weak var editItemDelegate: EditItemViewControllerDelegate?
+  
+  // MARK: - Properties
+  var editItem: NoteListItem?
+  var editItemIndexPath: IndexPath?
   
   // MARK: - LifeCycle
   override func viewDidLoad() {
@@ -54,22 +72,43 @@ class AddItemViewController: UITableViewController {
     textField.placeholder = "start typing..."
     textField.returnKeyType = .done
     textField.enablesReturnKeyAutomatically = true
+    
+    if editItem != nil, editItemIndexPath != nil {
+      textField.text = editItem?.text
+    }
   }
   
   
   // MARK: - @IBActions
   @IBAction func cancelButton() {
-    delegate?.addItemViewControllerDidCancel(self)
+    addItemDelegate?.addItemViewControllerDidCancel(self)
+    editItemDelegate?.editItemViewControllerDidCancel(self)
   }
   
   @IBAction func doneButton() {
     guard let itemText = textField.text else {
       return
     }
-    let listItem = CheckListItem(text: itemText, isCheck: false)
-    delegate?.addItemViewController(self, didFinishAdding: listItem)
+    let listItem = NoteListItem(text: itemText, isCheck: false)
+    addItemDelegate?.addItemViewController(self, didFinishAdding: listItem)
+    
+    
+    guard var editItem,
+          let editItemIndexPath else {
+      return
+    }
+    editItem.text = textField.text!
+    editItemDelegate?.editItemViewController(self, didFinishEditing: editItem,
+                                             with: editItemIndexPath)
   }
   
+  
+  // MARK: - Table Data Source
+  override func tableView(
+    _ tableView: UITableView,
+    titleForHeaderInSection section: Int) -> String? {
+      return self.title
+    }
   
   // MARK: - Table View Delegates
   override func tableView(
@@ -78,11 +117,16 @@ class AddItemViewController: UITableViewController {
       return nil
     }
   
+  override func tableView(
+    _ tableView: UITableView,
+    heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return 50
+  }
 }
 
 
 // MARK: - UITextFieldDelegate
-extension AddItemViewController:  UITextFieldDelegate {
+extension NoteDetailViewController:  UITextFieldDelegate {
   
   func textField(
     _ textField: UITextField,
@@ -91,15 +135,16 @@ extension AddItemViewController:  UITextFieldDelegate {
       
       let oldText = textField.text!
       let stringRange = Range(range, in: oldText)!
-      let newText = oldText.replacingCharacters(in: stringRange, with: string)
+      let newText = oldText.replacingCharacters(in: stringRange,
+                                                with: string)
       doneBarButton.isEnabled = !newText.isEmpty
       return true
     }
   
   func textFieldShouldClear(
     _ textField: UITextField) -> Bool {
-    doneBarButton.isEnabled = false
-    return true
-  }
+      doneBarButton.isEnabled = false
+      return true
+    }
   
 }
