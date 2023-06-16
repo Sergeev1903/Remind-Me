@@ -7,20 +7,20 @@
 
 import UIKit
 
-protocol AddItemViewControllerDelegate: AnyObject{
-  func addItemViewController(
+protocol AddItemNoteDetailViewControllerDelegate: AnyObject{
+  func addItemNoteDetailViewController(
     _ controller: NoteDetailViewController,
     didFinishAdding item: NoteListItem)
-  func addItemViewControllerDidCancel(
+  func addItemNoteDetailViewControllerDidCancel(
     _ controller: NoteDetailViewController)
 }
 
-protocol EditItemViewControllerDelegate: AnyObject{
-  func editItemViewController(
+protocol EditItemNoteDetailViewControllerDelegate: AnyObject{
+  func editItemNoteDetailViewController(
     _ controller: NoteDetailViewController,
     didFinishEditing item: NoteListItem,
     with indexPath: IndexPath)
-  func editItemViewControllerDidCancel(
+  func editItemNoteDetailViewControllerDidCancel(
     _ controller: NoteDetailViewController)
 }
 
@@ -32,8 +32,8 @@ class NoteDetailViewController: UITableViewController {
   @IBOutlet weak var doneBarButton: UIBarButtonItem!
   
   // MARK: - Delegates
-  weak var addItemDelegate: AddItemViewControllerDelegate?
-  weak var editItemDelegate: EditItemViewControllerDelegate?
+  weak var addItemDelegate: AddItemNoteDetailViewControllerDelegate?
+  weak var editItemDelegate: EditItemNoteDetailViewControllerDelegate?
   
   // MARK: - Properties
   var editItem: NoteListItem?
@@ -81,16 +81,19 @@ class NoteDetailViewController: UITableViewController {
   
   // MARK: - @IBActions
   @IBAction func cancelButton() {
-    addItemDelegate?.addItemViewControllerDidCancel(self)
-    editItemDelegate?.editItemViewControllerDidCancel(self)
+    addItemDelegate?.addItemNoteDetailViewControllerDidCancel(self)
+    editItemDelegate?.editItemNoteDetailViewControllerDidCancel(self)
   }
   
   @IBAction func doneButton() {
     guard let itemText = textField.text else {
       return
     }
-    let listItem = NoteListItem(text: itemText, isCheck: false)
-    addItemDelegate?.addItemViewController(self, didFinishAdding: listItem)
+    let listItem = NoteListItem()
+    listItem.text = textField.text!
+    addItemDelegate?.addItemNoteDetailViewController(
+      self,
+      didFinishAdding: listItem)
     
     
     guard var editItem,
@@ -98,8 +101,10 @@ class NoteDetailViewController: UITableViewController {
       return
     }
     editItem.text = textField.text!
-    editItemDelegate?.editItemViewController(self, didFinishEditing: editItem,
-                                             with: editItemIndexPath)
+    editItemDelegate?.editItemNoteDetailViewController(
+      self,
+      didFinishEditing: editItem,
+      with: editItemIndexPath)
   }
   
   
@@ -120,8 +125,8 @@ class NoteDetailViewController: UITableViewController {
   override func tableView(
     _ tableView: UITableView,
     heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return 50
-  }
+      return 50
+    }
 }
 
 
