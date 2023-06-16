@@ -18,8 +18,7 @@ protocol AddItemNoteDetailViewControllerDelegate: AnyObject{
 protocol EditItemNoteDetailViewControllerDelegate: AnyObject{
   func editItemNoteDetailViewController(
     _ controller: NoteDetailViewController,
-    didFinishEditing item: NoteListItem,
-    with indexPath: IndexPath)
+    didFinishEditing item: NoteListItem)
   func editItemNoteDetailViewControllerDidCancel(
     _ controller: NoteDetailViewController)
 }
@@ -37,7 +36,7 @@ class NoteDetailViewController: UITableViewController {
   
   // MARK: - Properties
   var editItem: NoteListItem?
-  var editItemIndexPath: IndexPath?
+//  var editItemIndexPath: IndexPath?
   
   // MARK: - LifeCycle
   override func viewDidLoad() {
@@ -73,7 +72,7 @@ class NoteDetailViewController: UITableViewController {
     textField.returnKeyType = .done
     textField.enablesReturnKeyAutomatically = true
     
-    if editItem != nil, editItemIndexPath != nil {
+    if editItem != nil {
       textField.text = editItem?.text
     }
   }
@@ -96,15 +95,13 @@ class NoteDetailViewController: UITableViewController {
       didFinishAdding: listItem)
     
     
-    guard var editItem,
-          let editItemIndexPath else {
+    guard var editItem else {
       return
     }
     editItem.text = textField.text!
     editItemDelegate?.editItemNoteDetailViewController(
       self,
-      didFinishEditing: editItem,
-      with: editItemIndexPath)
+      didFinishEditing: editItem)
   }
   
   

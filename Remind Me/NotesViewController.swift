@@ -46,7 +46,7 @@ class NotesViewController: UITableViewController {
     cell.textLabel?.text = item.text
   }
   
-  private func edit(_ item: NoteListItem, indexPath: IndexPath) {
+  private func edit(_ item: NoteListItem) {
     guard let vc = storyboard?.instantiateViewController(
       withIdentifier: String(describing: NoteDetailViewController.self))
             as? NoteDetailViewController else {
@@ -55,7 +55,6 @@ class NotesViewController: UITableViewController {
     vc.editItemDelegate = self
     vc.title = "Edit Note"
     vc.editItem = item
-    vc.editItemIndexPath = indexPath
     navigationController?.pushViewController(vc, animated: true)
   }
   
@@ -173,7 +172,7 @@ class NotesViewController: UITableViewController {
     _ tableView: UITableView,
     accessoryButtonTappedForRowWith indexPath: IndexPath) {
       let item = items[indexPath.row]
-      edit(item, indexPath: indexPath)
+      edit(item)
     }
 }
 
@@ -212,8 +211,9 @@ extension NotesViewController: EditItemNoteDetailViewControllerDelegate {
   
   func editItemNoteDetailViewController(
     _ controller: NoteDetailViewController,
-    didFinishEditing item: NoteListItem, with indexPath: IndexPath) {
+    didFinishEditing item: NoteListItem) {
       
+      // get indexPath for current item
       if let index = items.firstIndex(of: item) {
         let indexPath = IndexPath(row: index, section: 0)
         if let cell = tableView.cellForRow(at: indexPath) {
