@@ -10,7 +10,7 @@ import UIKit
 protocol AddItemListDetailViewControllerDelegate: AnyObject{
   func addItemListDetailViewController(
     _ controller: ListDetailViewController,
-    didFinishAdding item: NoteList)
+    didFinishAdding item: ListItem)
   func addItemListDetailViewControllerDidCancel(
     _ controller: ListDetailViewController)
 }
@@ -18,7 +18,7 @@ protocol AddItemListDetailViewControllerDelegate: AnyObject{
 protocol EditItemListDetailViewControllerDelegate: AnyObject{
   func editItemListDetailViewController(
     _ controller: ListDetailViewController,
-    didFinishEditing item: NoteList)
+    didFinishEditing item: ListItem)
   func editItemListDetailViewControllerDidCancel(
     _ controller: ListDetailViewController)
 }
@@ -37,7 +37,7 @@ class ListDetailViewController: UITableViewController {
   
   
   // MARK: - Properties
-  var editItem: NoteList?
+  var editItem: ListItem?
   
   
   // MARK: - Lifecycle
@@ -90,7 +90,7 @@ class ListDetailViewController: UITableViewController {
     guard textField.text != nil else {
       return
     }
-    let listItem = NoteList(name: "")
+    let listItem = ListItem(name: "")
     listItem.name = textField.text!
     addItemDelegate?.addItemListDetailViewController(
       self,

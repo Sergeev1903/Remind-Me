@@ -10,16 +10,13 @@ import UIKit
 class NotesViewController: UITableViewController {
   
   // MARK: - Properties
-  var items: [NoteListItem] = []
+  var noteList: ListItem!
   
   
   // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-  
-    loadNotelistItems()
-    print("Documents folder is \(documentsDirectory())")
-    print("Data file path is \(dataFilePath())")
+
   }
   
   
@@ -39,11 +36,11 @@ class NotesViewController: UITableViewController {
   
   private func configureText(
     for cell: UITableViewCell,
-    with item: NoteListItem) {
+    with item: NoteItem) {
     cell.textLabel?.text = item.text
   }
   
-  private func edit(_ item: NoteListItem) {
+  private func edit(_ item: NoteItem) {
     guard let vc = storyboard?.instantiateViewController(
       withIdentifier: String(describing: NoteDetailViewController.self))
             as? NoteDetailViewController else {
@@ -55,33 +52,6 @@ class NotesViewController: UITableViewController {
     navigationController?.pushViewController(vc, animated: true)
   }
   
-  // MARK: Save data to infoplist
-  private func saveNotelistItems() {
-    let encoder = PropertyListEncoder()
-    do {
-      let data = try encoder.encode(items)
-      try data.write(
-        to: dataFilePath(),
-        options: Data.WritingOptions.atomic)
-    } catch {
-      print("Error encoding item array: \(error.localizedDescription)")
-    }
-  }
-  
-  // MARK: Load data from infoplist
-  private func loadNotelistItems() {
-    let path = dataFilePath()
-    if let data = try? Data(contentsOf: path) {
-      let decoder = PropertyListDecoder()
-      do {
-        items = try decoder.decode(
-          [NoteListItem].self,
-          from: data)
-      } catch {
-        print("Error decoding item array: \(error.localizedDescription)")
-      }
-    }
-  }
   
   // MARK: - @IBActions
   @IBAction func addItem() {
@@ -100,7 +70,7 @@ class NotesViewController: UITableViewController {
   override func tableView(
     _ tableView: UITableView,
     numberOfRowsInSection section: Int) -> Int {
-      return items.count
+      return noteList.items.count
     }
   
   override func tableView(
@@ -112,7 +82,7 @@ class NotesViewController: UITableViewController {
         return UITableViewCell()
       }
       
-      let item = items[indexPath.row]
+      let item = noteList.items[indexPath.row]
       cell.textLabel?.text = item.text
       cell.textLabel?.numberOfLines = 3
       
@@ -132,11 +102,9 @@ class NotesViewController: UITableViewController {
     commit editingStyle: UITableViewCell.EditingStyle,
     forRowAt indexPath: IndexPath) {
       
-      items.remove(at: indexPath.row)
+      noteList.items.remove(at: indexPath.row)
       let indexPaths = [indexPath]
       tableView.deleteRows(at: indexPaths, with: .automatic)
-      
-      saveNotelistItems()
     }
   
   
@@ -146,7 +114,7 @@ class NotesViewController: UITableViewController {
     didSelectRowAt indexPath: IndexPath) {
       
       if let cell = tableView.cellForRow(at: indexPath) {
-        let item = items[indexPath.row]
+        let item = noteList.items[indexPath.row]
         item.isCheck.toggle()
         
         switch cell.imageView?.isHidden {
@@ -161,16 +129,22 @@ class NotesViewController: UITableViewController {
         }
         tableView.deselectRow(at: indexPath, animated: true)
       }
-      saveNotelistItems()
     }
   
   
   override func tableView(
     _ tableView: UITableView,
     accessoryButtonTappedForRowWith indexPath: IndexPath) {
-      let item = items[indexPath.row]
+      let item = noteList.items[indexPath.row]
       edit(item)
     }
+  
+  override func tableView(
+    _ tableView: UITableView,
+    heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return 60
+  }
+  
 }
 
 
@@ -184,16 +158,14 @@ extension NotesViewController: AddItemNoteDetailViewControllerDelegate {
   
   func addItemNoteDetailViewController(
     _ controller: NoteDetailViewController,
-    didFinishAdding item: NoteListItem) {
+    didFinishAdding item: NoteItem) {
       
-      let newRowIndex = items.count
-      items.append(item)
+      let newRowIndex = noteList.items.count
+      noteList.items.append(item)
       let indexPath = IndexPath(row: newRowIndex, section: 0)
       let indexPaths = [indexPath]
       tableView.insertRows(at: indexPaths, with: .automatic)
       navigationController?.popViewController(animated:true)
-      
-      saveNotelistItems()
     }
   
 }
@@ -209,34 +181,17 @@ extension NotesViewController: EditItemNoteDetailViewControllerDelegate {
   
   func editItemNoteDetailViewController(
     _ controller: NoteDetailViewController,
-    didFinishEditing item: NoteListItem) {
+    didFinishEditing item: NoteItem) {
       
       // get indexPath for current edit item
-      if let index = items.firstIndex(of: item) {
+      if let index = noteList.items.firstIndex(of: item) {
         let indexPath = IndexPath(row: index, section: 0)
         if let cell = tableView.cellForRow(at: indexPath) {
           configureText(for: cell, with: item)
         }
       }
       navigationController?.popViewController(animated:true)
-      saveNotelistItems()
     }
   
 }
 
-
-// MARK: -
-extension NotesViewController {
-  
-  func documentsDirectory() -> URL {
-    let paths = FileManager.default.urls(
-      for: .documentDirectory,
-      in: .userDomainMask)
-    return paths[0]
-  }
-  
-  func dataFilePath() -> URL {
-    return documentsDirectory().appendingPathComponent("Remind Me.plist")
-  }
-  
-}
