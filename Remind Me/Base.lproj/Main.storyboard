@@ -9,7 +9,32 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Remind Me-->
+        <!--Lists View Controller-->
+        <scene sceneID="iKP-RC-Zby">
+            <objects>
+                <tableViewController storyboardIdentifier="ListsViewController" id="jmu-JA-pSS" customClass="ListsViewController" customModule="Remind_Me" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="DN5-1e-Hql">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="jmu-JA-pSS" id="LPF-OY-Wgn"/>
+                            <outlet property="delegate" destination="jmu-JA-pSS" id="Ulb-jV-Pb7"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" prompt="Remind Me" id="hXv-pR-1Le">
+                        <barButtonItem key="rightBarButtonItem" title="Add List" id="xaQ-rF-u2m">
+                            <connections>
+                                <action selector="addItem" destination="jmu-JA-pSS" id="DGP-0z-a6v"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hPJ-vx-Bhg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="658" y="-89"/>
+        </scene>
+        <!--Name of list-->
         <scene sceneID="hS5-aU-Td8">
             <objects>
                 <tableViewController storyboardIdentifier="NotesViewController" id="Nk3-vN-gkI" customClass="NotesViewController" customModule="Remind_Me" customModuleProvider="target" sceneMemberID="viewController">
@@ -18,7 +43,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="MainTableViewCell" textLabel="fRc-75-Arn" imageView="pc5-PF-z5T" style="IBUITableViewCellStyleDefault" id="gdd-w3-bxw">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="NotesCell" textLabel="fRc-75-Arn" imageView="pc5-PF-z5T" style="IBUITableViewCellStyleDefault" id="gdd-w3-bxw">
                                 <rect key="frame" x="0.0" y="50" width="375" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gdd-w3-bxw" id="htJ-Sq-Ubt">
@@ -26,20 +51,20 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fRc-75-Arn">
-                                            <rect key="frame" x="55.5" y="0.0" width="253" height="43.5"/>
+                                            <rect key="frame" x="55" y="0.0" width="253.5" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="pc5-PF-z5T">
-                                            <rect key="frame" x="15.5" y="9.5" width="25" height="24"/>
+                                            <rect key="frame" x="16.25" y="10.5" width="23.5" height="22.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <imageReference key="image" image="checkmark.square.fill" catalog="system" symbolScale="large" renderingMode="hierarchical">
+                                            <imageReference key="image" image="checkmark" catalog="system" symbolScale="large" renderingMode="hierarchical">
                                                 <hierarchicalColors>
-                                                    <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <color systemColor="secondaryLabelColor"/>
                                                     <color systemColor="systemGreenColor"/>
+                                                    <color systemColor="secondaryLabelColor"/>
+                                                    <color systemColor="tertiaryLabelColor"/>
                                                 </hierarchicalColors>
                                             </imageReference>
                                         </imageView>
@@ -52,19 +77,20 @@
                             <outlet property="delegate" destination="Nk3-vN-gkI" id="Eti-Pl-o42"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Remind Me" prompt="note everything" id="dRd-Wo-wqj">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="WIm-fo-8Mv">
+                    <navigationItem key="navigationItem" title="Name of list" id="dRd-Wo-wqj">
+                        <barButtonItem key="rightBarButtonItem" title="Add Note" id="WIm-fo-8Mv">
                             <connections>
                                 <action selector="addItem" destination="Nk3-vN-gkI" id="JyA-Ze-dws"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qYE-wM-pcP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="637.60000000000002" y="-89.505247376311857"/>
+            <point key="canvasLocation" x="1466" y="-89"/>
         </scene>
-        <!--Item Detail-->
+        <!--Note Detail-->
         <scene sceneID="SuX-fL-kU0">
             <objects>
                 <tableViewController storyboardIdentifier="NoteDetailViewController" id="Ukq-lx-KN3" customClass="NoteDetailViewController" customModule="Remind_Me" customModuleProvider="target" sceneMemberID="viewController">
@@ -86,10 +112,10 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="34" id="jZw-rn-Cyf"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
-                                                        <action selector="doneButton" destination="Ukq-lx-KN3" eventType="editingDidEndOnExit" id="ABH-OA-6Za"/>
+                                                        <action selector="doneButton" destination="Ukq-lx-KN3" eventType="editingDidEndOnExit" id="j6z-Lu-rlq"/>
                                                     </connections>
                                                 </textField>
                                             </subviews>
@@ -109,26 +135,27 @@
                             <outlet property="delegate" destination="Ukq-lx-KN3" id="ad6-x0-lG2"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Item Detail" id="ctD-sG-V44">
+                    <navigationItem key="navigationItem" title="Note Detail" id="ctD-sG-V44">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="rUs-Uy-E79">
                             <connections>
-                                <action selector="cancelButton" destination="Ukq-lx-KN3" id="uoN-Oq-X8G"/>
+                                <action selector="cancelButton" destination="Ukq-lx-KN3" id="8rd-WN-7Dm"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="ELZ-F7-JpB">
                             <connections>
-                                <action selector="doneButton" destination="Ukq-lx-KN3" id="P7F-f0-emN"/>
+                                <action selector="doneButton" destination="Ukq-lx-KN3" id="MAD-gw-Tc7"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="doneBarButton" destination="ELZ-F7-JpB" id="F3C-7P-JJe"/>
-                        <outlet property="textField" destination="D85-2b-2iV" id="5Nl-Ti-GoV"/>
+                        <outlet property="doneBarButton" destination="ELZ-F7-JpB" id="6yd-7j-S7D"/>
+                        <outlet property="textField" destination="D85-2b-2iV" id="ZgO-yC-chT"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0IH-IF-wFM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2020" y="534"/>
+            <point key="canvasLocation" x="2180" y="-90"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="2QP-qd-u1U">
@@ -141,34 +168,83 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="Nk3-vN-gkI" kind="relationship" relationship="rootViewController" id="6Md-fC-BmQ"/>
+                        <segue destination="jmu-JA-pSS" kind="relationship" relationship="rootViewController" id="lMa-Gy-nue"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f4M-WH-edx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-132" y="-88.605697151424295"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="0SD-Tj-iW1">
+        <!--List Detail-->
+        <scene sceneID="dYo-TR-qBd">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Lo1-uM-USl" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="p1q-8f-Y7Q">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
+                <tableViewController storyboardIdentifier="ListDetailViewController" id="ro9-FB-20P" customClass="ListDetailViewController" customModule="Remind_Me" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="dcV-0H-ey7">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <sections>
+                            <tableViewSection headerTitle="Item Detail" id="5R9-hV-Cpf">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="e0Y-zS-JlD">
+                                        <rect key="frame" x="16" y="55.5" width="343" height="34.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="e0Y-zS-JlD" id="L1K-rP-gUf">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="34.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="OEr-dF-LHo">
+                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="34.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="34" id="Sod-ko-Pp2"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <action selector="doneButton" destination="ro9-FB-20P" eventType="editingDidEndOnExit" id="eND-lM-1sj"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="OEr-dF-LHo" secondAttribute="trailing" id="C7C-Cb-5Gt"/>
+                                                <constraint firstItem="OEr-dF-LHo" firstAttribute="leading" secondItem="L1K-rP-gUf" secondAttribute="leading" id="aGu-1c-tes"/>
+                                                <constraint firstItem="OEr-dF-LHo" firstAttribute="top" secondItem="L1K-rP-gUf" secondAttribute="top" id="cUa-Sz-AQa"/>
+                                                <constraint firstAttribute="bottom" secondItem="OEr-dF-LHo" secondAttribute="bottom" id="wPN-PU-HS5"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="ro9-FB-20P" id="UGf-2W-2m6"/>
+                            <outlet property="delegate" destination="ro9-FB-20P" id="jSP-U2-OrP"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="List Detail" id="ccs-Kq-iEK">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="TIS-Bp-edk">
+                            <connections>
+                                <action selector="cancelButton" destination="ro9-FB-20P" id="xn9-My-vPv"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="Cyw-bY-5mN">
+                            <connections>
+                                <action selector="doneButton" destination="ro9-FB-20P" id="cx3-K6-VaR"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <segue destination="Ukq-lx-KN3" kind="relationship" relationship="rootViewController" id="Bi1-4i-aYZ"/>
+                        <outlet property="doneBarButton" destination="Cyw-bY-5mN" id="7yr-z4-1Os"/>
+                        <outlet property="textField" destination="OEr-dF-LHo" id="aOX-Cf-zlP"/>
                     </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jKm-pL-QO5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hgr-3Z-0SP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1327" y="534"/>
+            <point key="canvasLocation" x="657" y="592"/>
         </scene>
     </scenes>
     <resources>
-        <image name="checkmark.square.fill" catalog="system" width="128" height="114"/>
+        <image name="checkmark" catalog="system" width="128" height="114"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
@@ -177,6 +253,9 @@
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tertiaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29803921568627451" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

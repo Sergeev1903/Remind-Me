@@ -30,13 +30,15 @@ class NoteDetailViewController: UITableViewController {
   @IBOutlet weak var textField: UITextField!
   @IBOutlet weak var doneBarButton: UIBarButtonItem!
   
+  
   // MARK: - Delegates
   weak var addItemDelegate: AddItemNoteDetailViewControllerDelegate?
   weak var editItemDelegate: EditItemNoteDetailViewControllerDelegate?
   
+  
   // MARK: - Properties
   var editItem: NoteListItem?
-//  var editItemIndexPath: IndexPath?
+  
   
   // MARK: - LifeCycle
   override func viewDidLoad() {
@@ -85,7 +87,7 @@ class NoteDetailViewController: UITableViewController {
   }
   
   @IBAction func doneButton() {
-    guard let itemText = textField.text else {
+    guard textField.text != nil else {
       return
     }
     let listItem = NoteListItem()
@@ -95,7 +97,7 @@ class NoteDetailViewController: UITableViewController {
       didFinishAdding: listItem)
     
     
-    guard var editItem else {
+    guard let editItem else {
       return
     }
     editItem.text = textField.text!
@@ -105,25 +107,20 @@ class NoteDetailViewController: UITableViewController {
   }
   
   
-  // MARK: - Table Data Source
+  // MARK: - Table view data source
   override func tableView(
     _ tableView: UITableView,
     titleForHeaderInSection section: Int) -> String? {
       return self.title
     }
   
-  // MARK: - Table View Delegates
+  // MARK: - Table view delegate
   override func tableView(
     _ tableView: UITableView,
     willSelectRowAt indexPath: IndexPath) -> IndexPath? {
       return nil
     }
   
-  override func tableView(
-    _ tableView: UITableView,
-    heightForRowAt indexPath: IndexPath) -> CGFloat {
-      return 50
-    }
 }
 
 

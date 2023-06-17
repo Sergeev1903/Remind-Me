@@ -9,26 +9,21 @@ import UIKit
 
 class NotesViewController: UITableViewController {
   
-  // MARK: Properties
+  // MARK: - Properties
   var items: [NoteListItem] = []
   
-  // MARK: - LifeCycle
+  
+  // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    configureNavigationBar()
-    
+  
     loadNotelistItems()
-    // Add the following
     print("Documents folder is \(documentsDirectory())")
     print("Data file path is \(dataFilePath())")
   }
   
   
   // MARK: - Private methods
-  private func configureNavigationBar() {
-    navigationController?.navigationBar.prefersLargeTitles = true
-  }
-  
   private func crossedOut(isCheck: Bool, text: String) -> NSAttributedString {
     if isCheck {
       let attributedString = NSMutableAttributedString(string: (text))
@@ -42,7 +37,9 @@ class NotesViewController: UITableViewController {
     
   }
   
-  private func configureText(for cell: UITableViewCell, with item: NoteListItem) {
+  private func configureText(
+    for cell: UITableViewCell,
+    with item: NoteListItem) {
     cell.textLabel?.text = item.text
   }
   
@@ -58,7 +55,7 @@ class NotesViewController: UITableViewController {
     navigationController?.pushViewController(vc, animated: true)
   }
   
-  // MARK: - Save data to infoplist
+  // MARK: Save data to infoplist
   private func saveNotelistItems() {
     let encoder = PropertyListEncoder()
     do {
@@ -71,7 +68,7 @@ class NotesViewController: UITableViewController {
     }
   }
   
-  // MARK: - Load data from infoplist
+  // MARK: Load data from infoplist
   private func loadNotelistItems() {
     let path = dataFilePath()
     if let data = try? Data(contentsOf: path) {
@@ -86,7 +83,7 @@ class NotesViewController: UITableViewController {
     }
   }
   
-  // MARK: - @IBAction
+  // MARK: - @IBActions
   @IBAction func addItem() {
     guard let vc = storyboard?.instantiateViewController(
       withIdentifier: String(describing: NoteDetailViewController.self))
@@ -99,7 +96,7 @@ class NotesViewController: UITableViewController {
   }
   
   
-  //MARK: - TableView Data Source
+  //MARK: - TableView data source
   override func tableView(
     _ tableView: UITableView,
     numberOfRowsInSection section: Int) -> Int {
@@ -111,7 +108,7 @@ class NotesViewController: UITableViewController {
     cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       
       guard let cell = tableView.dequeueReusableCell(
-        withIdentifier: "MainTableViewCell") else {
+        withIdentifier: "NotesCell") else {
         return UITableViewCell()
       }
       
@@ -143,7 +140,7 @@ class NotesViewController: UITableViewController {
     }
   
   
-  // MARK: - TableView Delegate
+  // MARK: - Table view delegate
   override func tableView(
     _ tableView: UITableView,
     didSelectRowAt indexPath: IndexPath) {
@@ -201,6 +198,7 @@ extension NotesViewController: AddItemNoteDetailViewControllerDelegate {
   
 }
 
+
 // MARK: - EditItemViewControllerDelegate
 extension NotesViewController: EditItemNoteDetailViewControllerDelegate {
   
@@ -213,7 +211,7 @@ extension NotesViewController: EditItemNoteDetailViewControllerDelegate {
     _ controller: NoteDetailViewController,
     didFinishEditing item: NoteListItem) {
       
-      // get indexPath for current item
+      // get indexPath for current edit item
       if let index = items.firstIndex(of: item) {
         let indexPath = IndexPath(row: index, section: 0)
         if let cell = tableView.cellForRow(at: indexPath) {
