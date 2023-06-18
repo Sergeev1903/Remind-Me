@@ -22,7 +22,28 @@ class ListsViewController: UITableViewController {
     configureNavigationBar()
     configureTableView()
   }
-
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    // load last screen
+    navigationController?.delegate = self
+    
+    let index = dataModel.indexOfSelectedList
+    if index >= 0 && index < dataModel.lists.count {
+      let list = dataModel.lists[index]
+      
+      guard let vc = storyboard?.instantiateViewController(
+        withIdentifier: String(describing: NotesViewController.self))
+              as? NotesViewController else {
+        return
+      }
+      vc.title = list.name
+      vc.noteList = list
+      navigationController?.pushViewController( vc, animated: true)
+    }
+  }
+  
   
   // MARK: - Private methods
   private func configureNavigationBar() {
@@ -86,6 +107,8 @@ class ListsViewController: UITableViewController {
     _ tableView: UITableView,
     didSelectRowAt indexPath: IndexPath) {
       
+      dataModel.indexOfSelectedList = indexPath.row
+      
       guard let vc = storyboard?.instantiateViewController(
         withIdentifier: String(describing: NotesViewController.self))
               as? NotesViewController else {
@@ -113,12 +136,12 @@ class ListsViewController: UITableViewController {
       let indexPaths = [indexPath]
       tableView.deleteRows(at: indexPaths, with: .automatic)
     }
-
+  
   override func tableView(
     _ tableView: UITableView,
     heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return 60
-  }
+      return 60
+    }
   
 }
 
@@ -168,4 +191,18 @@ extension ListsViewController: EditItemListDetailViewControllerDelegate {
       navigationController?.popViewController(animated: true)
     }
   
+}
+
+
+// MARK: - UINavigationControllerDelegate
+extension ListsViewController: UINavigationControllerDelegate {
+  
+  func navigationController(
+    _ navigationController: UINavigationController,
+    willShow viewController: UIViewController, animated: Bool) {
+      
+      if viewController === self {
+        dataModel.indexOfSelectedList = -1
+      }
+    }
 }
