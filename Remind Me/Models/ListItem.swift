@@ -16,6 +16,14 @@ class ListItem: NSCoder, Codable {
     self.name = name
     self.icon = icon
   }
+  
+  func countUncheckedItems() -> Int {
+    var count = 0
+    for item in items where !item.isCheck {
+      count += 1
+    }
+    return count
+  }
 }
 
   

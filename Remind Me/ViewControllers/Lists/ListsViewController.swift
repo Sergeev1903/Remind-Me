@@ -11,7 +11,6 @@ class ListsViewController: UITableViewController {
   
   // MARK: - Properties
   var dataModel: DataModel!
-  let cellID = "AllListsCell"
   
   
   // MARK: - Lifecycle
@@ -20,7 +19,10 @@ class ListsViewController: UITableViewController {
     title = "All Lists"
     
     configureNavigationBar()
-    configureTableView()
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    tableView.reloadData()
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -48,11 +50,6 @@ class ListsViewController: UITableViewController {
   // MARK: - Private methods
   private func configureNavigationBar() {
     navigationController?.navigationBar.prefersLargeTitles = true
-  }
-  
-  private func configureTableView() {
-    tableView.register(UITableViewCell.self,
-                       forCellReuseIdentifier: cellID)
   }
   
   private func edit(_ item: ListItem) {
@@ -91,16 +88,23 @@ class ListsViewController: UITableViewController {
   override func tableView(
     _ tableView: UITableView,
     cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      let cell = tableView.dequeueReusableCell(
-        withIdentifier: cellID, for: indexPath)
+      
+      let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "AllListsCell")
       
       let item = dataModel.lists[indexPath.row]
       cell.textLabel?.text = item.name
       cell.imageView?.image = UIImage(systemName: item.icon)
+      
+      let notDoneItems = item.countUncheckedItems()
+      if item.items.count == 0 {
+        cell.detailTextLabel?.text = "empty list"
+      } else {
+        cell.detailTextLabel?.text = notDoneItems == 0 ? "all done": "\(notDoneItems) not done"
+      }
+      
       cell.accessoryType = .detailDisclosureButton
       return cell
     }
-  
   
   // MARK: - Table view dalegate
   override func tableView(
