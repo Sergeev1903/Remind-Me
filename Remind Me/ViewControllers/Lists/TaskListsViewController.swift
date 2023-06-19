@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ListsViewController: UITableViewController {
+class TaskListsViewController: UITableViewController {
   
   // MARK: - Properties
   var dataModel: DataModel!
@@ -16,7 +16,7 @@ class ListsViewController: UITableViewController {
   // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    title = "All Lists"
+    title = "All Task Lists"
     
     configureNavigationBar()
   }
@@ -36,12 +36,12 @@ class ListsViewController: UITableViewController {
       let list = dataModel.lists[index]
       
       guard let vc = storyboard?.instantiateViewController(
-        withIdentifier: String(describing: NotesViewController.self))
-              as? NotesViewController else {
+        withIdentifier: String(describing: TasksViewController.self))
+              as? TasksViewController else {
         return
       }
       vc.title = list.name
-      vc.noteList = list
+      vc.taskList = list
       navigationController?.pushViewController( vc, animated: true)
     }
   }
@@ -52,10 +52,10 @@ class ListsViewController: UITableViewController {
     navigationController?.navigationBar.prefersLargeTitles = true
   }
   
-  private func edit(_ item: ListItem) {
+  private func edit(_ item: TaskListItem) {
     guard let vc = storyboard?.instantiateViewController(
-      withIdentifier: String(describing: ListDetailViewController.self))
-            as? ListDetailViewController else {
+      withIdentifier: String(describing: TaskListDetailViewController.self))
+            as? TaskListDetailViewController else {
       return
     }
     vc.editItemDelegate = self
@@ -68,8 +68,8 @@ class ListsViewController: UITableViewController {
   // MARK: - @IBActions
   @IBAction func addItem() {
     guard let vc = storyboard?.instantiateViewController(
-      withIdentifier: String(describing: ListDetailViewController.self))
-            as? ListDetailViewController else {
+      withIdentifier: String(describing: TaskListDetailViewController.self))
+            as? TaskListDetailViewController else {
       return
     }
     vc.addItemDelegate = self
@@ -114,13 +114,13 @@ class ListsViewController: UITableViewController {
       dataModel.indexOfSelectedList = indexPath.row
       
       guard let vc = storyboard?.instantiateViewController(
-        withIdentifier: String(describing: NotesViewController.self))
-              as? NotesViewController else {
+        withIdentifier: String(describing: TasksViewController.self))
+              as? TasksViewController else {
         return
       }
       let item = dataModel.lists[indexPath.row]
       vc.title = item.name
-      vc.noteList = item
+      vc.taskList = item
       navigationController?.pushViewController(vc, animated: true)
     }
   
@@ -151,22 +151,23 @@ class ListsViewController: UITableViewController {
 
 
 // MARK: - AddItemListDetailViewControllerDelegate
-extension ListsViewController: AddItemListDetailViewControllerDelegate {
+extension TaskListsViewController: AddItemTaskListDetailViewControllerDelegate {
   
-  func addItemListDetailViewController(
-    _ controller: ListDetailViewController,
-    didFinishAdding item: ListItem) {
+  func addItemTaskListDetailViewController(
+    _ controller: TaskListDetailViewController,
+    didFinishAdding item: TaskListItem) {
       
       let newRowIndex = dataModel.lists.count
       dataModel.lists.append(item)
-      let indexPath = IndexPath(row: newRowIndex, section: 0)
-      let indexPaths = [indexPath]
-      tableView.insertRows(at: indexPaths, with: .automatic)
+      dataModel.sortLists()
+      tableView.reloadData()
       navigationController?.popViewController(animated:true)
     }
   
-  func addItemListDetailViewControllerDidCancel(
-    _ controller: ListDetailViewController) {
+  func addItemTaskListDetailViewControllerDidCancel(
+    _ controller: TaskListDetailViewController) {
+      dataModel.sortLists()
+      tableView.reloadData()
       navigationController?.popViewController(animated: true)
     }
   
@@ -174,11 +175,11 @@ extension ListsViewController: AddItemListDetailViewControllerDelegate {
 
 
 // MARK: - EditItemListDetailViewControllerDelegate
-extension ListsViewController: EditItemListDetailViewControllerDelegate {
+extension TaskListsViewController: EditItemTaskListDetailViewControllerDelegate {
   
-  func editItemListDetailViewController(
-    _ controller: ListDetailViewController,
-    didFinishEditing item: ListItem) {
+  func editItemTaskListDetailViewController(
+    _ controller: TaskListDetailViewController,
+    didFinishEditing item: TaskListItem) {
       
       // get indexPath for current edit item
       if let index = dataModel.lists.firstIndex(of: item) {
@@ -190,8 +191,8 @@ extension ListsViewController: EditItemListDetailViewControllerDelegate {
       navigationController?.popViewController(animated:true)
     }
   
-  func editItemListDetailViewControllerDidCancel(
-    _ controller: ListDetailViewController) {
+  func editItemTaskListDetailViewControllerDidCancel(
+    _ controller: TaskListDetailViewController) {
       navigationController?.popViewController(animated: true)
     }
   
@@ -199,7 +200,7 @@ extension ListsViewController: EditItemListDetailViewControllerDelegate {
 
 
 // MARK: - UINavigationControllerDelegate
-extension ListsViewController: UINavigationControllerDelegate {
+extension TaskListsViewController: UINavigationControllerDelegate {
   
   func navigationController(
     _ navigationController: UINavigationController,

@@ -15,7 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   
   // MARK: - Helper Methods
   func saveData() {
-    dataModel.saveChecklists()
+    dataModel.saveLists()
   }
   
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     guard let _ = (scene as? UIWindowScene) else { return }
     
     let navigationController = window!.rootViewController as! UINavigationController
-    let controller = navigationController.viewControllers[0] as! ListsViewController
+    let controller = navigationController.viewControllers[0] as! TaskListsViewController
     controller.dataModel = dataModel
   }
   

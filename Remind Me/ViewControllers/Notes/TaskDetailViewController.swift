@@ -1,30 +1,30 @@
 //
-//  ListDetailViewController.swift
+//  AddItemViewController.swift
 //  Remind Me
 //
-//  Created by Артем Сергеев on 17.06.2023.
+//  Created by Артем Сергеев on 12.06.2023.
 //
 
 import UIKit
 
-protocol AddItemListDetailViewControllerDelegate: AnyObject{
-  func addItemListDetailViewController(
-    _ controller: ListDetailViewController,
-    didFinishAdding item: ListItem)
-  func addItemListDetailViewControllerDidCancel(
-    _ controller: ListDetailViewController)
+protocol AddItemTaskDetailViewControllerDelegate: AnyObject{
+  func addItemTaskDetailViewController(
+    _ controller: TaskDetailViewController,
+    didFinishAdding item: TaskItem)
+  func addItemTaskDetailViewControllerDidCancel(
+    _ controller: TaskDetailViewController)
 }
 
-protocol EditItemListDetailViewControllerDelegate: AnyObject{
-  func editItemListDetailViewController(
-    _ controller: ListDetailViewController,
-    didFinishEditing item: ListItem)
-  func editItemListDetailViewControllerDidCancel(
-    _ controller: ListDetailViewController)
+protocol EditItemTaskDetailViewControllerDelegate: AnyObject{
+  func editItemTaskDetailViewController(
+    _ controller: TaskDetailViewController,
+    didFinishEditing item: TaskItem)
+  func editItemTaskDetailViewControllerDidCancel(
+    _ controller: TaskDetailViewController)
 }
 
 
-class ListDetailViewController: UITableViewController {
+class TaskDetailViewController: UITableViewController {
   
   // MARK: - @IBOutlets
   @IBOutlet weak var textField: UITextField!
@@ -32,15 +32,15 @@ class ListDetailViewController: UITableViewController {
   
   
   // MARK: - Delegates
-  weak var addItemDelegate: AddItemListDetailViewControllerDelegate?
-  weak var editItemDelegate: EditItemListDetailViewControllerDelegate?
+  weak var addItemDelegate: AddItemTaskDetailViewControllerDelegate?
+  weak var editItemDelegate: EditItemTaskDetailViewControllerDelegate?
   
   
   // MARK: - Properties
-  var editItem: ListItem?
+  var editItem: TaskItem?
   
   
-  // MARK: - Lifecycle
+  // MARK: - LifeCycle
   override func viewDidLoad() {
     super.viewDidLoad()
     configureNavigationBar()
@@ -75,24 +75,24 @@ class ListDetailViewController: UITableViewController {
     textField.enablesReturnKeyAutomatically = true
     
     if editItem != nil {
-      textField.text = editItem?.name
+      textField.text = editItem?.text
     }
   }
   
   
   // MARK: - @IBActions
   @IBAction func cancelButton() {
-    addItemDelegate?.addItemListDetailViewControllerDidCancel(self)
-    editItemDelegate?.editItemListDetailViewControllerDidCancel(self)
+    addItemDelegate?.addItemTaskDetailViewControllerDidCancel(self)
+    editItemDelegate?.editItemTaskDetailViewControllerDidCancel(self)
   }
   
   @IBAction func doneButton() {
     guard textField.text != nil else {
       return
     }
-    let listItem = ListItem(name: "")
-    listItem.name = textField.text!
-    addItemDelegate?.addItemListDetailViewController(
+    let listItem = TaskItem()
+    listItem.text = textField.text!
+    addItemDelegate?.addItemTaskDetailViewController(
       self,
       didFinishAdding: listItem)
     
@@ -100,8 +100,8 @@ class ListDetailViewController: UITableViewController {
     guard let editItem else {
       return
     }
-    editItem.name = textField.text!
-    editItemDelegate?.editItemListDetailViewController(
+    editItem.text = textField.text!
+    editItemDelegate?.editItemTaskDetailViewController(
       self,
       didFinishEditing: editItem)
   }
@@ -114,7 +114,6 @@ class ListDetailViewController: UITableViewController {
       return self.title
     }
   
-  
   // MARK: - Table view delegate
   override func tableView(
     _ tableView: UITableView,
@@ -126,7 +125,7 @@ class ListDetailViewController: UITableViewController {
 
 
 // MARK: - UITextFieldDelegate
-extension ListDetailViewController:  UITextFieldDelegate {
+extension TaskDetailViewController:  UITextFieldDelegate {
   
   func textField(
     _ textField: UITextField,

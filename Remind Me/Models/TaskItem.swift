@@ -7,7 +7,7 @@
 
 import Foundation
 
-class NoteItem: NSCoder, Codable {
+class TaskItem: NSCoder, Codable {
   var text: String = ""
   var isCheck: Bool = false
 }

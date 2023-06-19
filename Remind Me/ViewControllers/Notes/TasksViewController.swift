@@ -7,16 +7,16 @@
 
 import UIKit
 
-class NotesViewController: UITableViewController {
+class TasksViewController: UITableViewController {
   
   // MARK: - Properties
-  var noteList: ListItem!
+  var taskList: TaskListItem!
   
   
   // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-
+    
   }
   
   
@@ -36,18 +36,18 @@ class NotesViewController: UITableViewController {
   
   private func configureText(
     for cell: UITableViewCell,
-    with item: NoteItem) {
-    cell.textLabel?.text = item.text
-  }
+    with item: TaskItem) {
+      cell.textLabel?.text = item.text
+    }
   
-  private func edit(_ item: NoteItem) {
+  private func edit(_ item: TaskItem) {
     guard let vc = storyboard?.instantiateViewController(
-      withIdentifier: String(describing: NoteDetailViewController.self))
-            as? NoteDetailViewController else {
+      withIdentifier: String(describing: TaskDetailViewController.self))
+            as? TaskDetailViewController else {
       return
     }
     vc.editItemDelegate = self
-    vc.title = "Edit Note"
+    vc.title = "Edit Task"
     vc.editItem = item
     navigationController?.pushViewController(vc, animated: true)
   }
@@ -56,12 +56,12 @@ class NotesViewController: UITableViewController {
   // MARK: - @IBActions
   @IBAction func addItem() {
     guard let vc = storyboard?.instantiateViewController(
-      withIdentifier: String(describing: NoteDetailViewController.self))
-            as? NoteDetailViewController else {
+      withIdentifier: String(describing: TaskDetailViewController.self))
+            as? TaskDetailViewController else {
       return
     }
     vc.addItemDelegate = self
-    vc.title = "Add Note"
+    vc.title = "Add Task"
     navigationController?.pushViewController(vc, animated: true)
   }
   
@@ -70,7 +70,7 @@ class NotesViewController: UITableViewController {
   override func tableView(
     _ tableView: UITableView,
     numberOfRowsInSection section: Int) -> Int {
-      return noteList.items.count
+      return taskList.items.count
     }
   
   override func tableView(
@@ -82,7 +82,7 @@ class NotesViewController: UITableViewController {
         return UITableViewCell()
       }
       
-      let item = noteList.items[indexPath.row]
+      let item = taskList.items[indexPath.row]
       cell.textLabel?.text = item.text
       cell.textLabel?.numberOfLines = 3
       
@@ -102,7 +102,7 @@ class NotesViewController: UITableViewController {
     commit editingStyle: UITableViewCell.EditingStyle,
     forRowAt indexPath: IndexPath) {
       
-      noteList.items.remove(at: indexPath.row)
+      taskList.items.remove(at: indexPath.row)
       let indexPaths = [indexPath]
       tableView.deleteRows(at: indexPaths, with: .automatic)
     }
@@ -114,7 +114,7 @@ class NotesViewController: UITableViewController {
     didSelectRowAt indexPath: IndexPath) {
       
       if let cell = tableView.cellForRow(at: indexPath) {
-        let item = noteList.items[indexPath.row]
+        let item = taskList.items[indexPath.row]
         item.isCheck.toggle()
         
         switch cell.imageView?.isHidden {
@@ -135,33 +135,33 @@ class NotesViewController: UITableViewController {
   override func tableView(
     _ tableView: UITableView,
     accessoryButtonTappedForRowWith indexPath: IndexPath) {
-      let item = noteList.items[indexPath.row]
+      let item = taskList.items[indexPath.row]
       edit(item)
     }
   
   override func tableView(
     _ tableView: UITableView,
     heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return 60
-  }
+      return 60
+    }
   
 }
 
 
 // MARK: - AddItemViewControllerDelegate
-extension NotesViewController: AddItemNoteDetailViewControllerDelegate {
+extension TasksViewController: AddItemTaskDetailViewControllerDelegate {
   
-  func addItemNoteDetailViewControllerDidCancel(
-    _ controller: NoteDetailViewController) {
+  func addItemTaskDetailViewControllerDidCancel(
+    _ controller: TaskDetailViewController) {
       navigationController?.popViewController(animated: true)
     }
   
-  func addItemNoteDetailViewController(
-    _ controller: NoteDetailViewController,
-    didFinishAdding item: NoteItem) {
+  func addItemTaskDetailViewController(
+    _ controller: TaskDetailViewController,
+    didFinishAdding item: TaskItem) {
       
-      let newRowIndex = noteList.items.count
-      noteList.items.append(item)
+      let newRowIndex = taskList.items.count
+      taskList.items.append(item)
       let indexPath = IndexPath(row: newRowIndex, section: 0)
       let indexPaths = [indexPath]
       tableView.insertRows(at: indexPaths, with: .automatic)
@@ -172,19 +172,19 @@ extension NotesViewController: AddItemNoteDetailViewControllerDelegate {
 
 
 // MARK: - EditItemViewControllerDelegate
-extension NotesViewController: EditItemNoteDetailViewControllerDelegate {
+extension TasksViewController: EditItemTaskDetailViewControllerDelegate {
   
-  func editItemNoteDetailViewControllerDidCancel(
-    _ controller: NoteDetailViewController) {
+  func editItemTaskDetailViewControllerDidCancel(
+    _ controller: TaskDetailViewController) {
       navigationController?.popViewController(animated: true)
     }
   
-  func editItemNoteDetailViewController(
-    _ controller: NoteDetailViewController,
-    didFinishEditing item: NoteItem) {
+  func editItemTaskDetailViewController(
+    _ controller: TaskDetailViewController,
+    didFinishEditing item: TaskItem) {
       
       // get indexPath for current edit item
-      if let index = noteList.items.firstIndex(of: item) {
+      if let index = taskList.items.firstIndex(of: item) {
         let indexPath = IndexPath(row: index, section: 0)
         if let cell = tableView.cellForRow(at: indexPath) {
           configureText(for: cell, with: item)

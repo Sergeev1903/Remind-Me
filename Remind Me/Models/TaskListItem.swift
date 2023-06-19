@@ -7,11 +7,11 @@
 
 import Foundation
 
-class ListItem: NSCoder, Codable {
+class TaskListItem: NSCoder, Codable {
   var name: String
   var icon: String
-  var items: [NoteItem] = []
-
+  var items: [TaskItem] = []
+  
   init(name: String, icon: String = "folder") {
     self.name = name
     self.icon = icon
@@ -26,4 +26,3 @@ class ListItem: NSCoder, Codable {
   }
 }
 
-  
