@@ -52,7 +52,7 @@ class TaskListsViewController: UITableViewController {
     navigationController?.navigationBar.prefersLargeTitles = true
   }
   
-  private func edit(_ item: TaskListItem) {
+  private func edit(_ item: TaskList) {
     guard let vc = storyboard?.instantiateViewController(
       withIdentifier: String(describing: TaskListDetailViewController.self))
             as? TaskListDetailViewController else {
@@ -155,9 +155,8 @@ extension TaskListsViewController: AddItemTaskListDetailViewControllerDelegate {
   
   func addItemTaskListDetailViewController(
     _ controller: TaskListDetailViewController,
-    didFinishAdding item: TaskListItem) {
-      
-      let newRowIndex = dataModel.lists.count
+    didFinishAdding item: TaskList) {
+
       dataModel.lists.append(item)
       dataModel.sortLists()
       tableView.reloadData()
@@ -179,7 +178,7 @@ extension TaskListsViewController: EditItemTaskListDetailViewControllerDelegate 
   
   func editItemTaskListDetailViewController(
     _ controller: TaskListDetailViewController,
-    didFinishEditing item: TaskListItem) {
+    didFinishEditing item: TaskList) {
       
       // get indexPath for current edit item
       if let index = dataModel.lists.firstIndex(of: item) {

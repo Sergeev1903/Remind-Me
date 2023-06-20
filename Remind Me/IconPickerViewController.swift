@@ -46,6 +46,8 @@ class IconPickerViewController: UITableViewController {
       return UITableViewCell()
     }
     
+    tableView.cellForRow(at: indexPath)?.selectionStyle = .none
+    tableView.separatorStyle = .none
     let iconName = icons[indexPath.row]
     cell.textLabel!.text = iconName
     cell.imageView!.image = UIImage(systemName: iconName)

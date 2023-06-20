@@ -10,7 +10,7 @@ import UIKit
 protocol AddItemTaskListDetailViewControllerDelegate: AnyObject{
   func addItemTaskListDetailViewController(
     _ controller: TaskListDetailViewController,
-    didFinishAdding item: TaskListItem)
+    didFinishAdding item: TaskList)
   func addItemTaskListDetailViewControllerDidCancel(
     _ controller: TaskListDetailViewController)
 }
@@ -18,7 +18,7 @@ protocol AddItemTaskListDetailViewControllerDelegate: AnyObject{
 protocol EditItemTaskListDetailViewControllerDelegate: AnyObject{
   func editItemTaskListDetailViewController(
     _ controller: TaskListDetailViewController,
-    didFinishEditing item: TaskListItem)
+    didFinishEditing item: TaskList)
   func editItemTaskListDetailViewControllerDidCancel(
     _ controller: TaskListDetailViewController)
 }
@@ -39,7 +39,7 @@ class TaskListDetailViewController: UITableViewController {
   
   
   // MARK: - Properties
-  var editItem: TaskListItem?
+  var editItem: TaskList?
   
   
   // MARK: - Lifecycle
@@ -104,7 +104,7 @@ class TaskListDetailViewController: UITableViewController {
         self,
         didFinishEditing: list)
     } else {
-      let list = TaskListItem(name: textField.text!)
+      let list = TaskList(name: textField.text!)
       list.icon = iconName
       addItemDelegate?.addItemTaskListDetailViewController(
         self,
@@ -117,12 +117,7 @@ class TaskListDetailViewController: UITableViewController {
   override func tableView(
     _ tableView: UITableView,
     titleForHeaderInSection section: Int) -> String? {
-      
-      if section == 0 {
-        return self.title
-      }
-      
-      return nil
+      return self.title
     }
   
   
@@ -137,7 +132,9 @@ class TaskListDetailViewController: UITableViewController {
     _ tableView: UITableView,
     didSelectRowAt indexPath: IndexPath) {
       
-      if indexPath.section == 1 {
+      tableView.cellForRow(at: indexPath)?.selectionStyle = .none
+      
+      if indexPath.row == 1 {
         guard let vc = storyboard?.instantiateViewController(
           withIdentifier: String(
             describing: IconPickerViewController.self))

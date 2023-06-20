@@ -8,7 +8,7 @@
 import Foundation
 
 class DataModel {
-  var lists: [TaskListItem] = []
+  var lists: [TaskList] = []
   
   var indexOfSelectedList: Int {
     get {
@@ -29,10 +29,17 @@ class DataModel {
     handleFirstTime()
   }
   
+  class func nextTasklistItemID() -> Int {
+    let userDefaults = UserDefaults.standard
+    let itemID = userDefaults.integer(forKey: "TaskItemID")
+    userDefaults.set(itemID + 1, forKey: "TaskItemID")
+    return itemID
+  }
+  
   private func defaultNoteLists() {
-    let list1 = TaskListItem(name: "Birthdays", icon: "gift")
-    let list2 = TaskListItem(name: "Groceries", icon: "cart")
-    let list3 = TaskListItem(name: "To Do", icon: "checklist")
+    let list1 = TaskList(name: "Birthdays", icon: "gift")
+    let list2 = TaskList(name: "Groceries", icon: "cart")
+    let list3 = TaskList(name: "To Do", icon: "checklist")
     
     lists = [list1, list2, list3]
   }
@@ -51,7 +58,7 @@ class DataModel {
     let firstTime = userDefaults.bool(forKey: "FirstTime")
     
     if firstTime {
-      let list = TaskListItem(name: "New list")
+      let list = TaskList(name: "New list")
       lists.append(list)
       indexOfSelectedList = 3
       userDefaults.set(false, forKey: "FirstTime")
@@ -88,7 +95,7 @@ class DataModel {
       let decoder = PropertyListDecoder()
       do {
         lists = try decoder.decode(
-          [TaskListItem].self, from: data)
+          [TaskList].self, from: data)
         sortLists()
       } catch {
         print("Error decoding list array: \(error.localizedDescription)")

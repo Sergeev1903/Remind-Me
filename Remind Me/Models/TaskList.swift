@@ -7,16 +7,18 @@
 
 import Foundation
 
-class TaskListItem: NSCoder, Codable {
-  var name: String
-  var icon: String
+class TaskList: NSCoder, Codable {
+  var name: String = ""
+  var icon: String = "folder"
   var items: [TaskItem] = []
   
   init(name: String, icon: String = "folder") {
     self.name = name
     self.icon = icon
+    super.init()
   }
   
+ 
   func countUncheckedItems() -> Int {
     var count = 0
     for item in items where !item.isCheck {

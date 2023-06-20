@@ -19,7 +19,7 @@
 		1DB637772A3DBA7100B43FF6 /* TaskListDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB637762A3DBA7100B43FF6 /* TaskListDetailViewController.swift */; };
 		1DC1E4B22A405B7400F67014 /* _IconPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC1E4B12A405B7400F67014 /* _IconPickerViewController.swift */; };
 		1DC1E4B52A40608200F67014 /* IconPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC1E4B42A40608200F67014 /* IconPickerViewController.swift */; };
-		1DFD42EB2A3CDCEA00FA5546 /* TaskListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFD42EA2A3CDCEA00FA5546 /* TaskListItem.swift */; };
+		1DFD42EB2A3CDCEA00FA5546 /* TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFD42EA2A3CDCEA00FA5546 /* TaskList.swift */; };
 		1DFD42ED2A3CE3B600FA5546 /* TaskListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFD42EC2A3CE3B600FA5546 /* TaskListsViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -38,7 +38,7 @@
 		1DB637762A3DBA7100B43FF6 /* TaskListDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListDetailViewController.swift; sourceTree = "<group>"; };
 		1DC1E4B12A405B7400F67014 /* _IconPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _IconPickerViewController.swift; sourceTree = "<group>"; };
 		1DC1E4B42A40608200F67014 /* IconPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconPickerViewController.swift; sourceTree = "<group>"; };
-		1DFD42EA2A3CDCEA00FA5546 /* TaskListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListItem.swift; sourceTree = "<group>"; };
+		1DFD42EA2A3CDCEA00FA5546 /* TaskList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskList.swift; sourceTree = "<group>"; };
 		1DFD42EC2A3CE3B600FA5546 /* TaskListsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -56,7 +56,7 @@
 		1D03AB992A38A7B700A87A55 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				1DFD42EA2A3CDCEA00FA5546 /* TaskListItem.swift */,
+				1DFD42EA2A3CDCEA00FA5546 /* TaskList.swift */,
 				1D59547E2A30AB9900D13E72 /* TaskItem.swift */,
 				1D165E312A3DF4F80070D0ED /* DataModel.swift */,
 			);
@@ -227,7 +227,7 @@
 				1DC1E4B52A40608200F67014 /* IconPickerViewController.swift in Sources */,
 				1D59546D2A307C0900D13E72 /* SceneDelegate.swift in Sources */,
 				1D59547F2A30AB9900D13E72 /* TaskItem.swift in Sources */,
-				1DFD42EB2A3CDCEA00FA5546 /* TaskListItem.swift in Sources */,
+				1DFD42EB2A3CDCEA00FA5546 /* TaskList.swift in Sources */,
 				1DB637772A3DBA7100B43FF6 /* TaskListDetailViewController.swift in Sources */,
 				1D165E322A3DF4F80070D0ED /* DataModel.swift in Sources */,
 			);

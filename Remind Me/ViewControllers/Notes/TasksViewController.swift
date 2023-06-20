@@ -10,7 +10,7 @@ import UIKit
 class TasksViewController: UITableViewController {
   
   // MARK: - Properties
-  var taskList: TaskListItem!
+  var taskList: TaskList!
   
   
   // MARK: - Lifecycle
@@ -37,7 +37,8 @@ class TasksViewController: UITableViewController {
   private func configureText(
     for cell: UITableViewCell,
     with item: TaskItem) {
-      cell.textLabel?.text = item.text
+      //      cell.textLabel?.text = item.text
+      cell.textLabel?.text = "\(item.text) itemID:\(item.itemID)"
     }
   
   private func edit(_ item: TaskItem) {
@@ -83,7 +84,7 @@ class TasksViewController: UITableViewController {
       }
       
       let item = taskList.items[indexPath.row]
-      cell.textLabel?.text = item.text
+      configureText(for: cell, with: item)
       cell.textLabel?.numberOfLines = 3
       
       if item.isCheck {

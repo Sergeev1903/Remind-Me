@@ -10,6 +10,16 @@ import Foundation
 class TaskItem: NSCoder, Codable {
   var text: String = ""
   var isCheck: Bool = false
+  
+  var dueDate = Date()
+  var shouldRemind = false
+  var itemID = -1
+  
+  override init() {
+    super.init()
+    itemID = DataModel.nextTasklistItemID()
+  }
+  
 }
 
 
