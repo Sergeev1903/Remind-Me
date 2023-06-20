@@ -78,7 +78,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Name of list" id="dRd-Wo-wqj">
-                        <barButtonItem key="rightBarButtonItem" title="Add Note" id="WIm-fo-8Mv">
+                        <barButtonItem key="rightBarButtonItem" title="Add Task" id="WIm-fo-8Mv">
                             <connections>
                                 <action selector="addItem" destination="Nk3-vN-gkI" id="JyA-Ze-dws"/>
                             </connections>
@@ -195,7 +195,7 @@
                                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="OEr-dF-LHo">
                                                     <rect key="frame" x="0.0" y="0.0" width="343" height="40"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="34" id="Sod-ko-Pp2"/>
+                                                        <constraint firstAttribute="height" constant="40" id="Sod-ko-Pp2"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -223,37 +223,28 @@
                                             <rect key="frame" x="0.0" y="0.0" width="316.5" height="40"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Icon for list" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XM4-qg-diK">
-                                                    <rect key="frame" x="16" y="3" width="100" height="34"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Icon for list" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XM4-qg-diK">
+                                                    <rect key="frame" x="8" y="4" width="260.5" height="32"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Bl4-SJ-tnx">
-                                                    <rect key="frame" x="278.5" y="5" width="30" height="29.5"/>
+                                                    <rect key="frame" x="284.5" y="5" width="24" height="29.5"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="30" id="RcV-rS-gSm"/>
-                                                        <constraint firstAttribute="height" constant="30" id="cu3-xY-MfG"/>
+                                                        <constraint firstAttribute="height" constant="32" id="C22-UA-xmv"/>
+                                                        <constraint firstAttribute="width" constant="24" id="reg-tg-Xn7"/>
                                                     </constraints>
                                                 </imageView>
-                                                <colorWell contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="bmY-NS-A2k">
-                                                    <rect key="frame" x="240.5" y="4" width="30" height="32"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="30" id="54C-K3-zn2"/>
-                                                        <constraint firstAttribute="height" constant="30" id="jTt-Rn-LAo"/>
-                                                    </constraints>
-                                                </colorWell>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="Bl4-SJ-tnx" secondAttribute="trailing" constant="8" id="IkZ-vK-g2j"/>
-                                                <constraint firstItem="bmY-NS-A2k" firstAttribute="centerY" secondItem="wre-Ng-oI4" secondAttribute="centerY" id="NBu-KV-Nlh"/>
-                                                <constraint firstAttribute="bottom" secondItem="Bl4-SJ-tnx" secondAttribute="bottom" constant="4" id="cIe-8O-lAe"/>
-                                                <constraint firstItem="Bl4-SJ-tnx" firstAttribute="top" secondItem="wre-Ng-oI4" secondAttribute="top" constant="4" id="dXb-vS-adt"/>
-                                                <constraint firstItem="Bl4-SJ-tnx" firstAttribute="centerY" secondItem="wre-Ng-oI4" secondAttribute="centerY" id="lu0-aQ-tDd"/>
-                                                <constraint firstItem="Bl4-SJ-tnx" firstAttribute="leading" secondItem="bmY-NS-A2k" secondAttribute="trailing" constant="8" id="nEC-GG-TeN"/>
-                                                <constraint firstItem="bmY-NS-A2k" firstAttribute="top" secondItem="wre-Ng-oI4" secondAttribute="top" constant="4" id="qVl-Ci-5PG"/>
-                                                <constraint firstAttribute="bottom" secondItem="bmY-NS-A2k" secondAttribute="bottom" constant="4" id="vQR-Jz-zA8"/>
+                                                <constraint firstItem="Bl4-SJ-tnx" firstAttribute="leading" secondItem="XM4-qg-diK" secondAttribute="trailing" constant="16" id="XW6-bQ-AYa"/>
+                                                <constraint firstAttribute="bottom" secondItem="XM4-qg-diK" secondAttribute="bottom" constant="4" id="eoh-aj-gLZ"/>
+                                                <constraint firstItem="Bl4-SJ-tnx" firstAttribute="top" secondItem="wre-Ng-oI4" secondAttribute="top" constant="4" id="mrd-dm-LC4"/>
+                                                <constraint firstAttribute="bottom" secondItem="Bl4-SJ-tnx" secondAttribute="bottom" constant="4" id="my7-6v-nEC"/>
+                                                <constraint firstItem="XM4-qg-diK" firstAttribute="top" secondItem="wre-Ng-oI4" secondAttribute="top" constant="4" id="n1l-AW-b4D"/>
+                                                <constraint firstAttribute="trailing" secondItem="Bl4-SJ-tnx" secondAttribute="trailing" constant="8" id="sEs-zo-i2f"/>
+                                                <constraint firstItem="XM4-qg-diK" firstAttribute="leading" secondItem="wre-Ng-oI4" secondAttribute="leading" constant="8" id="tY6-vT-gAI"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
