@@ -112,13 +112,21 @@
 			children = (
 				1D03AB992A38A7B700A87A55 /* Models */,
 				1D0E658F2A3F28A5008BAA64 /* ViewControllers */,
-				1DC1E4B42A40608200F67014 /* IconPickerViewController.swift */,
+				1D84CF4E2A41CAD70005BEC9 /* IconPicker */,
 				1D0E65912A3F28F3008BAA64 /* Storyboards */,
 				1D0E65902A3F28CB008BAA64 /* Resources */,
 				1D5954782A307C0A00D13E72 /* Info.plist */,
 				1DC1E4B32A40605800F67014 /* Temp */,
 			);
 			path = "Remind Me";
+			sourceTree = "<group>";
+		};
+		1D84CF4E2A41CAD70005BEC9 /* IconPicker */ = {
+			isa = PBXGroup;
+			children = (
+				1DC1E4B42A40608200F67014 /* IconPickerViewController.swift */,
+			);
+			path = IconPicker;
 			sourceTree = "<group>";
 		};
 		1DB637752A3DBA2800B43FF6 /* Notes */ = {

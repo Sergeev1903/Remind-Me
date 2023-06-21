@@ -17,17 +17,11 @@ class TaskListsViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     title = "All Task Lists"
-    
     configureNavigationBar()
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    tableView.reloadData()
   }
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    
     // load last screen
     navigationController?.delegate = self
     
@@ -50,6 +44,12 @@ class TaskListsViewController: UITableViewController {
   // MARK: - Private methods
   private func configureNavigationBar() {
     navigationController?.navigationBar.prefersLargeTitles = true
+    
+    let titleImage = UIImageView()
+    titleImage.image = #imageLiteral(resourceName: "icons8-tick-tick-96()")
+    titleImage.contentMode = .scaleAspectFill
+    let logoNavigationBar = UIBarButtonItem(customView: titleImage)
+    navigationItem.leftBarButtonItem = logoNavigationBar
   }
   
   private func edit(_ item: TaskList) {
@@ -156,7 +156,6 @@ extension TaskListsViewController: AddItemTaskListDetailViewControllerDelegate {
   func addItemTaskListDetailViewController(
     _ controller: TaskListDetailViewController,
     didFinishAdding item: TaskList) {
-
       dataModel.lists.append(item)
       dataModel.sortLists()
       tableView.reloadData()
@@ -179,7 +178,6 @@ extension TaskListsViewController: EditItemTaskListDetailViewControllerDelegate 
   func editItemTaskListDetailViewController(
     _ controller: TaskListDetailViewController,
     didFinishEditing item: TaskList) {
-      
       // get indexPath for current edit item
       if let index = dataModel.lists.firstIndex(of: item) {
         let indexPath = IndexPath(row: index, section: 0)
@@ -204,9 +202,9 @@ extension TaskListsViewController: UINavigationControllerDelegate {
   func navigationController(
     _ navigationController: UINavigationController,
     willShow viewController: UIViewController, animated: Bool) {
-      
       if viewController === self {
         dataModel.indexOfSelectedList = -1
       }
     }
+  
 }

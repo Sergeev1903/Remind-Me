@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 protocol AddItemTaskDetailViewControllerDelegate: AnyObject{
   func addItemTaskDetailViewController(
@@ -29,7 +30,9 @@ class TaskDetailViewController: UITableViewController {
   // MARK: - @IBOutlets
   @IBOutlet weak var textField: UITextField!
   @IBOutlet weak var doneBarButton: UIBarButtonItem!
-  
+  @IBOutlet weak var shouldRemindSwitch: UISwitch!
+  @IBOutlet weak var datePicker: UIDatePicker!
+  @IBOutlet weak var datePickerCell: UITableViewCell!
   
   // MARK: - Delegates
   weak var addItemDelegate: AddItemTaskDetailViewControllerDelegate?
@@ -46,6 +49,7 @@ class TaskDetailViewController: UITableViewController {
     configureNavigationBar()
     configureTableView()
     configureTextField()
+    configureRemindState()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -68,14 +72,26 @@ class TaskDetailViewController: UITableViewController {
     textField.delegate = self
     textField.borderStyle = .roundedRect
     textField.layer.cornerRadius = 10
-    textField.layer.borderColor = #colorLiteral(red: 0.03921568627, green: 0.5176470588, blue: 1, alpha: 1)
+    textField.layer.borderColor = UIColor.separator.cgColor
     textField.layer.borderWidth = 1
+    textField.layer.masksToBounds = true
     textField.placeholder = "start typing..."
     textField.returnKeyType = .done
     textField.enablesReturnKeyAutomatically = true
     
     if editItem != nil {
       textField.text = editItem?.text
+    }
+  }
+  
+  private func configureRemindState() {
+    shouldRemindSwitch.isOn = false
+    datePickerCell.isHidden = true
+
+    if let item = editItem {
+      datePickerCell.isHidden = item.shouldRemind ? false: true
+      shouldRemindSwitch.isOn = item.shouldRemind
+      datePicker.date = item.dueDate
     }
   }
   
@@ -87,11 +103,15 @@ class TaskDetailViewController: UITableViewController {
   }
   
   @IBAction func doneButton() {
-    guard textField.text != nil else {
-      return
+    
+    guard !textField.text!.isEmpty else {
+      return doneBarButton.isEnabled = false
     }
     let listItem = TaskItem()
     listItem.text = textField.text!
+    listItem.shouldRemind = shouldRemindSwitch.isOn
+    listItem.dueDate = datePicker.date
+    listItem.scheduleNotification()
     addItemDelegate?.addItemTaskDetailViewController(
       self,
       didFinishAdding: listItem)
@@ -101,9 +121,33 @@ class TaskDetailViewController: UITableViewController {
       return
     }
     editItem.text = textField.text!
+    editItem.shouldRemind = shouldRemindSwitch.isOn
+    editItem.dueDate = datePicker.date
+    editItem.scheduleNotification()
     editItemDelegate?.editItemTaskDetailViewController(
       self,
       didFinishEditing: editItem)
+  }
+  
+  @IBAction func shouldRemindToggled(_ switchControl: UISwitch) {
+    textField.resignFirstResponder()
+        
+    if (switchControl.isOn != editItem?.shouldRemind && !textField.text!.isEmpty) ||
+        datePicker.date != editItem?.dueDate {
+      doneBarButton.isEnabled = true
+    } else {
+      doneBarButton.isEnabled = false
+    }
+
+    if switchControl.isOn {
+      datePickerCell.isHidden = false
+      let center = UNUserNotificationCenter.current()
+      center.requestAuthorization(options: [.alert, .sound, .badge]) {_, _ in
+        print(" notification active")
+      }
+    } else {
+      datePickerCell.isHidden = true
+    }
   }
   
   

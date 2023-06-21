@@ -30,7 +30,7 @@ class TaskListDetailViewController: UITableViewController {
   @IBOutlet weak var textField: UITextField!
   @IBOutlet weak var doneBarButton: UIBarButtonItem!
   @IBOutlet weak var iconImage: UIImageView!
-  
+
   
   // MARK: - Delegates
   weak var addItemDelegate: AddItemTaskListDetailViewControllerDelegate?
@@ -71,8 +71,9 @@ class TaskListDetailViewController: UITableViewController {
     textField.delegate = self
     textField.borderStyle = .roundedRect
     textField.layer.cornerRadius = 10
-    textField.layer.borderColor = #colorLiteral(red: 0.03921568627, green: 0.5176470588, blue: 1, alpha: 1)
+    textField.layer.borderColor = UIColor.separator.cgColor
     textField.layer.borderWidth = 1
+    textField.layer.masksToBounds = true
     textField.placeholder = "start typing..."
     textField.returnKeyType = .done
     textField.enablesReturnKeyAutomatically = true
@@ -146,7 +147,6 @@ class TaskListDetailViewController: UITableViewController {
       }
     }
   
-  
 }
 
 
@@ -176,6 +176,7 @@ extension TaskListDetailViewController:  UITextFieldDelegate {
 
 // MARK: - IconPickerViewControllerDelegate
 extension TaskListDetailViewController: IconPickerViewControllerDelegate {
+  
   func iconPicker(
     _ picker: IconPickerViewController,
     didPick iconName: String) {
@@ -184,6 +185,5 @@ extension TaskListDetailViewController: IconPickerViewControllerDelegate {
       doneBarButton.isEnabled = !iconName.isEmpty
       navigationController?.popViewController(animated: true)
     }
-  
   
 }

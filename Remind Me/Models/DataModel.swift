@@ -8,6 +8,7 @@
 import Foundation
 
 class DataModel {
+  
   var lists: [TaskList] = []
   
   var indexOfSelectedList: Int {
@@ -53,7 +54,6 @@ class DataModel {
   }
   
   private func handleFirstTime() {
-    
     let userDefaults = UserDefaults.standard
     let firstTime = userDefaults.bool(forKey: "FirstTime")
     

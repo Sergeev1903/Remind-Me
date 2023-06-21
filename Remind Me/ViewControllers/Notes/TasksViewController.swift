@@ -37,8 +37,7 @@ class TasksViewController: UITableViewController {
   private func configureText(
     for cell: UITableViewCell,
     with item: TaskItem) {
-      //      cell.textLabel?.text = item.text
-      cell.textLabel?.text = "\(item.text) itemID:\(item.itemID)"
+      cell.textLabel?.text = item.text
     }
   
   private func edit(_ item: TaskItem) {
@@ -89,8 +88,8 @@ class TasksViewController: UITableViewController {
       
       if item.isCheck {
         cell.imageView?.isHidden = false
-        cell.textLabel?.attributedText = crossedOut(isCheck: item.isCheck,
-                                                    text: (cell.textLabel?.text)!)
+        cell.textLabel?.attributedText = crossedOut(
+          isCheck: item.isCheck, text: (cell.textLabel?.text)!)
       } else {
         cell.imageView?.isHidden = true
       }
@@ -183,7 +182,6 @@ extension TasksViewController: EditItemTaskDetailViewControllerDelegate {
   func editItemTaskDetailViewController(
     _ controller: TaskDetailViewController,
     didFinishEditing item: TaskItem) {
-      
       // get indexPath for current edit item
       if let index = taskList.items.firstIndex(of: item) {
         let indexPath = IndexPath(row: index, section: 0)
